@@ -1,16 +1,16 @@
 
 this.addEventListener('message', function (e) {
 
-    console.log(e.data);
+    //console.log(e.data);
     var d = findBestMove(e.data[0], e.data[1])
 
     this.postMessage(d);
 }, false);
 
 // varible global
-var anpha = 0, beta = 0;
+var alphaIn = 0, betaIn = 0;
 const INFINITY = 1000000000;
-const MAX_DEPTH = 3;
+const MAX_DEPTH = 4;
 
 function findBestMove(board, playerName) {
     var best = -INFINITY;
@@ -28,7 +28,7 @@ function findBestMove(board, playerName) {
 
                     // Call minimax recursively and choose 
                     // the maximum value 
-                    var move = minimax(board, 0, false, playerName);
+                    var move = minimax(board, 0, false, playerName, -INFINITY, INFINITY);
 
                     if (move > best) {
                         best = move;
@@ -441,7 +441,7 @@ function heuristic(board, player) {
     return count;
 }
 
-function minimax(board, depth, isMax, playerMaxName) {
+function minimax(board, depth, isMax, playerMaxName, alpha, beta) {
     var state = checkGameState(board);
 
     var playerMinName = "X";
@@ -481,9 +481,9 @@ function minimax(board, depth, isMax, playerMaxName) {
         var best = -INFINITY;
 
         // Traverse all cells
-        for (var i = 0; i < 3; ++i) {
-            for (var j = 0; j < 3; ++j) {
-                for (var k = 0; k < 3; ++k) {
+        for (var i = 0; i < 3 && alpha < beta; ++i) {
+            for (var j = 0; j < 3 && alpha < beta; ++j) {
+                for (var k = 0; k < 3 && alpha < beta; ++k) {
                     // if cell empty
                     // console.log("Depth: " + depth);
                     // console.log("i j k = " + i+ " " + j + " " + k);
@@ -495,12 +495,16 @@ function minimax(board, depth, isMax, playerMaxName) {
 
                         // Call minimax recursively and choose 
                         // the maximum value 
-                        var move = minimax(board, depth + 1, !isMax, playerMaxName);
+                        var move = minimax(board, depth + 1, !isMax, playerMaxName, alpha, beta);
                         best = (best > move) ? best : move;
+                        
+                        alpha = (best > alpha) ? best : alpha;
 
                         // Undo the move 
                         board[i][j][k] = "";
 
+                        // Alpha Beta Pruning  
+                        if (beta <= alpha) break;
                     }
                 }
             }
@@ -513,9 +517,9 @@ function minimax(board, depth, isMax, playerMaxName) {
         var best = INFINITY;
 
         // Traverse all cells
-        for (var i = 0; i < 3; ++i) {
-            for (var j = 0; j < 3; ++j) {
-                for (var k = 0; k < 3; ++k) {
+        for (var i = 0; i < 3 && alpha < beta; ++i) {
+            for (var j = 0; j < 3 && alpha < beta; ++j) {
+                for (var k = 0; k < 3 && alpha < beta; ++k) {
                     // if cell empty
                     // console.log("Depth: " + depth);
                     // console.log("i j k = " + i + " " + j + " " + k);
@@ -527,12 +531,16 @@ function minimax(board, depth, isMax, playerMaxName) {
 
                         // Call minimax recursively and choose 
                         // the maximum value 
-                        var move = minimax(board, depth + 1, !isMax, playerMaxName);
+                        var move = minimax(board, depth + 1, !isMax, playerMaxName, alpha, beta);
                         best = (best < move) ? best : move;
+                        
+                        beta = (best < beta) ? best : beta;
 
                         // Undo the move 
                         board[i][j][k] = "";
 
+                        // Alpha Beta Pruning (parsed into for loop condition)
+                        if (beta <= alpha) break;
                     }
                 }
             }

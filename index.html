@@ -3,10 +3,18 @@
 <head>
     <link href="style.css" rel="stylesheet">
     <title>CUBE Tic-Tac-Toe with AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
     <h1>CUBE Tic-Tac-Toe with AI</h1>
+    <h1>Written by Duy H. 18120339</h1>
+    
+    <!-- A trick allow Player2/CPU to play first:
+        Step1: Play a "X" to the board
+        Step2: Make sure the button of "Start with your initial board" was switched off
+        Step3: Start the game  -->
+
     <div class="wrapper">
         <script src="script.js"></script>
         <script src="worker.js"></script>
@@ -14,51 +22,51 @@
         <div class="container" id="c2">
             <table>
                 <tr>
-                    <th onclick="myClick(2, 0, 0)">
+                    <th id="th_200" onclick="myClick(2, 0, 0)">
                         <img id="o_200" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_200" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(2, 0, 1)">
+                    <th id="th_201" onclick="myClick(2, 0, 1)">
                         <img id="o_201" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_201" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(2, 0, 2)">
+                    <th id="th_202" onclick="myClick(2, 0, 2)">
                         <img id="o_202" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_202" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
                 </tr>
                 <tr>
-                    <th onclick="myClick(2, 1, 0)">
+                    <th id="th_210" onclick="myClick(2, 1, 0)">
                         <img id="o_210" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_210" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(2, 1, 1)">
+                    <th id="th_211" onclick="myClick(2, 1, 1)">
                         <img id="o_211" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_211" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(2, 1, 2)">
+                    <th id="th_212" onclick="myClick(2, 1, 2)">
                         <img id="o_212" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_212" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
                 </tr>
                 <tr>
-                    <th onclick="myClick(2, 2, 0)">
+                    <th id="th_220" onclick="myClick(2, 2, 0)">
                         <img id="o_220" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_220" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(2, 2, 1)">
+                    <th id="th_221" onclick="myClick(2, 2, 1)">
                         <img id="o_221" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_221" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(2, 2, 2)">
+                    <th id="th_222" onclick="myClick(2, 2, 2)">
                         <img id="o_222" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_222" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
@@ -70,51 +78,51 @@
 
             <table>
                 <tr>
-                    <th onclick="myClick(1, 0, 0)">
+                    <th id="th_100" onclick="myClick(1, 0, 0)">
                         <img id="o_100" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_100" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(1, 0, 1)">
+                    <th id="th_101" onclick="myClick(1, 0, 1)">
                         <img id="o_101" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_101" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(1, 0, 2)">
+                    <th id="th_102" onclick="myClick(1, 0, 2)">
                         <img id="o_102" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_102" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
                 </tr>
                 <tr>
-                    <th onclick="myClick(1, 1, 0)">
+                    <th id="th_110" onclick="myClick(1, 1, 0)">
                         <img id="o_110" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_110" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(1, 1, 1)">
+                    <th id="th_111" onclick="myClick(1, 1, 1)">
                         <img id="o_111" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_111" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(1, 1, 2)">
+                    <th id="th_112" onclick="myClick(1, 1, 2)">
                         <img id="o_112" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_112" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
                 </tr>
                 <tr>
-                    <th onclick="myClick(1, 2, 0)">
+                    <th id="th_120" onclick="myClick(1, 2, 0)">
                         <img id="o_120" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_120" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(1, 2, 1)">
+                    <th id="th_121" onclick="myClick(1, 2, 1)">
                         <img id="o_121" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_121" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(1, 2, 2)">
+                    <th id="th_122" onclick="myClick(1, 2, 2)">
                         <img id="o_122" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_122" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
@@ -125,51 +133,51 @@
         <div class="container" id="c0">
             <table>
                 <tr>
-                    <th onclick="myClick(0, 0, 0)">
+                    <th id="th_000" onclick="myClick(0, 0, 0)">
                         <img id="o_000" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_000" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(0, 0, 1)">
+                    <th id="th_001" onclick="myClick(0, 0, 1)">
                         <img id="o_001" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_001" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(0, 0, 2)">
+                    <th id="th_002" onclick="myClick(0, 0, 2)">
                         <img id="o_002" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_002" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
                 </tr>
                 <tr>
-                    <th onclick="myClick(0, 1, 0)">
+                    <th id="th_010" onclick="myClick(0, 1, 0)">
                         <img id="o_010" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_010" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(0, 1, 1)">
+                    <th id="th_011" onclick="myClick(0, 1, 1)">
                         <img id="o_011" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_011" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(0, 1, 2)">
+                    <th id="th_012" onclick="myClick(0, 1, 2)">
                         <img id="o_012" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_012" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
                 </tr>
                 <tr>
-                    <th onclick="myClick(0, 2, 0)">
+                    <th id="th_020" onclick="myClick(0, 2, 0)">
                         <img id="o_020" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_020" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(0, 2, 1)">
+                    <th id="th_021" onclick="myClick(0, 2, 1)">
                         <img id="o_021" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_021" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
                     </th>
-                    <th onclick="myClick(0, 2, 2)">
+                    <th id="th_022" onclick="myClick(0, 2, 2)">
                         <img id="o_022" src="circle-ring.svg" width="50px" style="display: none;">
                         <img id="x_022" src="cross.png" width="50px" style="display: none;">
                         <h3></h3>
@@ -183,11 +191,46 @@
             <ul>
                 <li>
                     <<< </li>
-
-                <li> >>> </li>
+                <li>>>></li>
             </ul>
 
-            <button onclick="startGame()">Start Game</button>
+
+            <div class="mess_area" id="mess_area">
+                <h1 id="cur_turn" class="cur_turn" onclick="startGame()">Click here to Start</h1>
+<!--                 
+                <button class="button" id="button">
+                    <h1 id="cur_turn">Click here to Start</h1>
+                </button> -->
+
+               
+
+                <div class="inline_checkbox" id="inline_checkbox">
+                    <!-- Rounded switch -->
+                    <div>
+                        <i><b>Play with CPU</b></i>
+                        </br>
+                        <label class="switch">
+                            <input type="checkbox" id="cb_player_type">
+                            <span class="slider round"></span>
+
+                        </label>
+
+                    </div>
+
+                    <div>
+                        <i><b>Start with your initial board</b></i>
+                        </br>
+                        <label class="switch">
+                            <input type="checkbox" id="cb_user_init">
+                            <span class="slider round"></span>
+
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+
         </div>
     </div>
 </body>
