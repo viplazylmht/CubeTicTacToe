@@ -10,6 +10,11 @@ var player1 = new Player("X", false);
 var player2 = new Player("O", true);
 
 var isGameStarted = false;
+var cpuActive = false;
+var cpuFirst = false;
+
+var allowInit = false;
+var optimizeCpu = true;
 
 var worker = new Worker("worker.js");
 worker.addEventListener('message', function (e) {
@@ -24,6 +29,9 @@ function myClick(a, b, c) {
 
     var state = checkGameState(matrix);
     if (state.winPlayer !== 0) return;
+
+    // block user init
+    if (isGameStarted !== true && allowInit === false) return;
 
     if (play(currentTurn, a, b, c) === false) return;
 
@@ -50,7 +58,8 @@ function myClick(a, b, c) {
 
     if (currentTurn.isCpu === true) {
         t.innerHTML = "CPU turn...";
-        worker.postMessage([matrix, currentTurn.name]);
+        currentTurn.findBestMove(matrix);
+        // worker.postMessage([matrix, currentTurn.name]);
     }
 
     else {
@@ -113,20 +122,14 @@ function startGame() {
         return;
     }
 
+    // start the game
     if (isGameStarted !== false) return;
 
     document.getElementById("inline_checkbox").style.display = "none";
 
-    var cbOpt1 = document.getElementById("cb_player_type");
-    var cbOpt2 = document.getElementById("cb_user_init");
+    player2.isCpu = cpuActive;
 
-    player2.isCpu = cbOpt1.checked;
-
-    if (cbOpt2.checked !== true) {
-        // clear the board
-        clearDOMBoard();
-
-    }
+    if (cpuFirst === true) currentTurn = player2;
 
     var nextTurn;
 
@@ -139,7 +142,8 @@ function startGame() {
 
     if (currentTurn.isCpu === true) {
         t.innerHTML = "<b>CPU turn...</b>";
-        worker.postMessage([matrix, currentTurn.name]);
+        currentTurn.findBestMove(matrix);
+        // worker.postMessage([matrix, currentTurn.name, cpuActive]);
     }
     else {
 
@@ -177,7 +181,7 @@ function play(player, a, b, c) {
                 else name = "Player1";
             }
 
-            dom.innerHTML = "<b>" + name + " win!\nWanna play again?</b>";
+            dom.innerHTML = "" + name + " win!</br>Wanna play again?</b>";
 
             isGameStarted = "end";
 
@@ -201,15 +205,15 @@ function play(player, a, b, c) {
 
 Player.prototype.findBestMove = function (board) {
 
-    worker.postMessage([board, this.name]);
+    worker.postMessage([board, this.name, optimizeCpu]);
 }
 
 function clearDOMBoard() {
     // matrix = [[["", "", ""], ["", "", ""], ["", "", ""]], [["", "", ""], ["", "", ""], ["", "", ""]], [["", "", ""], ["", "", ""], ["", "", ""]]];
 
-    for (var i = 0; i < 3; ++i) {
-        for (var j = 0; j < 3; ++j) {
-            for (var k = 0; k < 3; ++k) {
+    for (var i = 0; i < matrix.length; ++i) {
+        for (var j = 0; j < matrix[i].length; ++j) {
+            for (var k = 0; k < matrix[i][j].length; ++k) {
                 // clear this pos
                 matrix[i][j][k] = "";
 
@@ -222,4 +226,79 @@ function clearDOMBoard() {
             }
         }
     }
+}
+
+// create a N-dimensional array according to this answer: https://stackoverflow.com/a/49732119
+function NArray(...dimensions) {
+    function NArrayRec(dims) {
+        var first = dims[0], next = dims.slice().splice(1);
+        if (dims.length > 1)
+            return Array(dims[0]).fill(null).map((x, i) => NArrayRec(next));
+        return Array(dims[0]).fill(null).map((x, i) => (""));
+    }
+    return NArrayRec(dimensions);
+}
+
+function ShowMatrix(size) {
+    matrix = NArray(size, size, size);
+
+    // dom
+    var dt = document.getElementById("cube");
+    while (dt.firstChild) {
+        dt.removeChild(dt.firstChild);
+    }
+
+    var flatHtml;
+    //dt.insertAdjacentHTML('beforeend', '<font color="red">Error, can\'t send data!</font><br>');
+
+    for (var surface = 0; surface < size; ++surface) {
+        flatHtml = '<div class="container" id="c' + surface + '">\n<table>\n';
+
+        for (var r = 0; r < size; ++r) {
+            flatHtml += '<tr>\n';
+
+            for (var c = 0; c < size; ++c) {
+                flatHtml += '<th id="th_' + surface + r + c + '" onclick="myClick(' + surface + ', ' + r + ', ' + c + ')">\n'
+                    + '<img id="o_' + surface + r + c + '" src="circle-ring.svg" width="50px" style="display: none;">\n'
+                    + '<img id="x_' + surface + r + c + '" src="cross.png" width="50px" style="display: none;">\n'
+                    + '<h3></h3>\n'
+                    + '</th>\n'
+            }
+
+            flatHtml += '</tr>\n';
+        }
+
+        flatHtml += '</table>\n</div>';
+
+        dt.insertAdjacentHTML('beforeend', flatHtml);
+    }
+}
+
+function onPlayWithCPUClick() {
+    var t = document.getElementById("cb_player_type").checked;
+    var dom = document.getElementById("cpu_option");
+
+    cpuActive = t;
+
+    if (t === true) {
+        dom.style.display = "";
+    }
+
+    else dom.style.display = "none";
+}
+
+function onAllowInitialBclick() {
+    allowInit = document.getElementById("cb_user_init").checked;
+
+    if (allowInit === false) {
+        clearDOMBoard();
+    }
+}
+
+function onCPUFirstClick() {
+    cpuFirst = document.getElementById("cb_cpu_first").checked;
+}
+
+function onCPUOptimizeClick() {
+    optimizeCpu = document.getElementById("cb_cpu_optimize").checked;
 }
